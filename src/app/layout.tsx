@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
-import { Mulish, Bowlby_One } from "next/font/google";
+import { Mulish, Bowlby_One, Geist } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const mulish = Mulish({
   subsets: ["latin"],
@@ -25,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${mulish.variable} ${bowlby.variable}`}>
+    <html lang="es" className={cn(mulish.variable, bowlby.variable, "font-sans", geist.variable)}>
       <body style={{ fontFamily: "var(--font-mulish), system-ui, sans-serif" }}>
         {children}
       </body>
