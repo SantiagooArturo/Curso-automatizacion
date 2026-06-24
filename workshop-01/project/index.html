@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cineplanet — Réplica visual</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&family=Bowlby+One&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- ============ TOP UTILITY BAR ============ -->
+  <div class="util-bar">
+    <div class="util-inner">
+      <a href="#">Encuentra tu Cineplanet</a>
+      <span class="util-sep"></span>
+      <a href="#">Comunícate con nosotros</a>
+      <span class="util-sep"></span>
+      <a href="#">Trabaja con nosotros</a>
+    </div>
+  </div>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#" class="logo" aria-label="Cineplanet">
+        <svg viewBox="0 0 220 50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g>
+            <!-- Globe icon -->
+            <circle cx="25" cy="25" r="20" fill="none" stroke="#ffffff" stroke-width="2.2" />
+            <ellipse cx="25" cy="25" rx="20" ry="8" fill="none" stroke="#ffffff" stroke-width="2.2" />
+            <ellipse cx="25" cy="25" rx="8" ry="20" fill="none" stroke="#ffffff" stroke-width="2.2" />
+            <line x1="5" y1="25" x2="45" y2="25" stroke="#ffffff" stroke-width="2.2" />
+            <line x1="25" y1="5" x2="25" y2="45" stroke="#ffffff" stroke-width="2.2" />
+            <!-- Diagonal swoosh -->
+            <path d="M5 41 L45 9" stroke="#28d4ff" stroke-width="3.5" stroke-linecap="round" />
+          </g>
+          <text x="58" y="34" fill="#ffffff" font-family="Mulish, sans-serif" font-weight="800" font-size="28" letter-spacing="-0.6">cineplanet</text>
+        </svg>
+      </a>
+
+      <button class="hamburger" aria-label="Menú" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="primary-nav" id="primaryNav">
+        <a href="#" class="nav-link active">Películas</a>
+        <a href="#" class="nav-link">Cines</a>
+        <a href="#" class="nav-link">Promociones</a>
+        <a href="#" class="nav-link">Socio</a>
+        <a href="#" class="nav-link">Dulcería</a>
+        <a href="#" class="nav-link">Corporativo</a>
+        <a href="#" class="nav-link">Blog</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="action-btn" aria-label="Cuenta">
+          <span class="action-badge">Únete</span>
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+        </button>
+        <button class="action-btn" aria-label="Buscar">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+        </button>
+        <button class="action-btn" aria-label="Ayuda">
+          <span class="action-badge">Ayuda</span>
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.9.4-1 1-1 1.7"/><circle cx="12" cy="17" r="0.6" fill="currentColor"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ HERO / ESTRENOS ============ -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <h1 class="hero-title" aria-label="Estrenos">ESTRENOS</h1>
+
+    <div class="carousel" id="carousel">
+      <button class="carousel-arrow prev" aria-label="Anterior" id="prevBtn">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#ffd23f" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+
+      <div class="track-viewport">
+        <div class="track" id="track">
+          <!-- Movie cards rendered by JS -->
+        </div>
+      </div>
+
+      <button class="carousel-arrow next" aria-label="Siguiente" id="nextBtn">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#ffd23f" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+
+    <div class="dots" id="dots" aria-hidden="true"></div>
+  </section>
+
+  <!-- ============ FILTER BAR ============ -->
+  <section class="filter-section">
+    <div class="filter-card">
+      <div class="filter-cell">
+        <label>Por película</label>
+        <button class="filter-pick">
+          <span class="filter-strong">Por película</span>
+          <span class="filter-sub">Qué quieres ver</span>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#0e3a8a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+      <div class="filter-cell">
+        <button class="filter-pick">
+          <span class="filter-strong">Por ciudad</span>
+          <span class="filter-sub">Dónde estás</span>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#0e3a8a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+      <div class="filter-cell">
+        <button class="filter-pick">
+          <span class="filter-strong">Por cine</span>
+          <span class="filter-sub">Elige tu Cineplanet</span>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#0e3a8a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+      <div class="filter-cell">
+        <button class="filter-pick">
+          <span class="filter-strong">Por fecha</span>
+          <span class="filter-sub">Elige un día</span>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#0e3a8a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+      <button class="filter-go" disabled>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="4" y1="6" x2="14" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="11" y2="18"/><circle cx="17" cy="6" r="2.2" fill="currentColor" stroke="none"/><circle cx="7" cy="18" r="2.2" fill="currentColor" stroke="none"/></svg>
+        Filtrar
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ PELÍCULAS GRID ============ -->
+  <section class="movies-section">
+    <h2 class="section-title">Películas</h2>
+    <div class="tabs">
+      <button class="tab active">EN CARTELERA</button>
+      <button class="tab">PRÓXIMAMENTE</button>
+    </div>
+
+    <div class="movies-grid" id="moviesGrid"></div>
+
+    <div class="see-more">
+      <button class="see-more-btn">VER MÁS PELÍCULAS</button>
+    </div>
+  </section>
+
+  <!-- ============ PROMOCIONES ============ -->
+  <section class="promos-section">
+    <h2 class="section-title light">Promociones</h2>
+    <div class="promos-grid" id="promosGrid"></div>
+    <div class="see-more">
+      <button class="see-more-btn outline">VER TODAS LAS PROMOCIONES</button>
+    </div>
+  </section>
+
+  <!-- ============ SOCIO STRIP ============ -->
+  <section class="socio-strip">
+    <div class="socio-card">
+      <div class="socio-text">
+        <span class="socio-eyebrow">Socio Cineplanet</span>
+        <h3>Acumula puntos en cada compra y disfruta de beneficios exclusivos</h3>
+        <button class="cta-pill">QUIERO SER SOCIO</button>
+      </div>
+      <div class="socio-card-art" aria-hidden="true">
+        <div class="loyalty-card">
+          <div class="lc-top">
+            <span>SOCIO</span>
+            <strong>cineplanet</strong>
+          </div>
+          <div class="lc-num">5412 •••• •••• 7829</div>
+          <div class="lc-bottom"><span>JUAN PÉREZ</span><span>★ 1,240 pts</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DULCERÍA TEASER ============ -->
+  <section class="candy-section">
+    <h2 class="section-title">Dulcería</h2>
+    <p class="section-sub">Pide tu combo y recógelo sin colas</p>
+    <div class="candy-grid" id="candyGrid"></div>
+  </section>
+
+  <!-- ============ APP DOWNLOAD ============ -->
+  <section class="app-section">
+    <div class="app-inner">
+      <div class="app-copy">
+        <h2>Descarga la app de Cineplanet</h2>
+        <p>Compra tus entradas, acumula puntos y vive el cine donde estés.</p>
+        <div class="store-row">
+          <button class="store-btn">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M17.05 12.04c-.02-2.34 1.91-3.46 2-3.52-1.09-1.59-2.78-1.81-3.39-1.83-1.44-.15-2.81.85-3.55.85-.74 0-1.86-.83-3.06-.81-1.57.02-3.03.92-3.84 2.33-1.65 2.86-.42 7.07 1.18 9.39.78 1.13 1.7 2.4 2.91 2.36 1.18-.05 1.62-.76 3.04-.76s1.82.76 3.06.74c1.27-.02 2.07-1.15 2.84-2.29.9-1.31 1.27-2.59 1.29-2.66-.03-.01-2.46-.94-2.48-3.8zM14.7 5.27c.65-.79 1.09-1.88.97-2.97-.93.04-2.07.62-2.74 1.4-.6.69-1.12 1.8-.98 2.86 1.04.08 2.1-.53 2.75-1.29z"/></svg>
+            <span><small>Descarga en</small><strong>App Store</strong></span>
+          </button>
+          <button class="store-btn">
+            <svg viewBox="0 0 24 24" width="22" height="22"><path fill="#34d399" d="M3 3.5v17l9-8.5z"/><path fill="#60a5fa" d="M3 3.5L14 11l3-3z"/><path fill="#f87171" d="M3 20.5L14 13l3 3z"/><path fill="#fbbf24" d="M14 11l3-3 4 3-4 3z"/></svg>
+            <span><small>Disponible en</small><strong>Google Play</strong></span>
+          </button>
+        </div>
+      </div>
+      <div class="app-art" aria-hidden="true">
+        <div class="phone-mock">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-strip"></div>
+            <div class="phone-poster"></div>
+            <div class="phone-rows">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="phone-cta"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-col brand-col">
+        <svg viewBox="0 0 220 50" xmlns="http://www.w3.org/2000/svg" width="180" height="40">
+          <circle cx="25" cy="25" r="20" fill="none" stroke="#ffffff" stroke-width="2.2" />
+          <ellipse cx="25" cy="25" rx="20" ry="8" fill="none" stroke="#ffffff" stroke-width="2.2" />
+          <ellipse cx="25" cy="25" rx="8" ry="20" fill="none" stroke="#ffffff" stroke-width="2.2" />
+          <line x1="5" y1="25" x2="45" y2="25" stroke="#ffffff" stroke-width="2.2" />
+          <line x1="25" y1="5" x2="25" y2="45" stroke="#ffffff" stroke-width="2.2" />
+          <path d="M5 41 L45 9" stroke="#28d4ff" stroke-width="3.5" stroke-linecap="round" />
+          <text x="58" y="34" fill="#ffffff" font-family="Mulish, sans-serif" font-weight="800" font-size="28">cineplanet</text>
+        </svg>
+        <p class="footer-blurb">Vive el cine como nunca antes. Estrenos, promociones y la mejor dulcería en un solo lugar.</p>
+        <div class="socials">
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M13 22v-8h3l1-4h-4V7.5C13 6.6 13.4 6 14.7 6H17V2.3C16.5 2.2 15.4 2 14.2 2 11.6 2 10 3.6 10 6.7V10H7v4h3v8h3z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M23 7.2c-.3-1-1.1-1.8-2.1-2.1C19 4.5 12 4.5 12 4.5s-7 0-8.9.6C2.1 5.4 1.3 6.2 1 7.2.5 9.1.5 12 .5 12s0 2.9.5 4.8c.3 1 1.1 1.8 2.1 2.1 1.9.6 8.9.6 8.9.6s7 0 8.9-.6c1-.3 1.8-1.1 2.1-2.1.5-1.9.5-4.8.5-4.8s0-2.9-.5-4.8zM10 15.5v-7l6 3.5-6 3.5z"/></svg></a>
+          <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19.6 7.7v3.4a8.5 8.5 0 0 1-4.9-1.6v6.7a6.4 6.4 0 1 1-6.4-6.4c.4 0 .8 0 1.1.1v3.5a3 3 0 1 0 2.1 2.8V2h3.4a5 5 0 0 0 4.7 5.7z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Información</h4>
+        <a href="#">Sobre Cineplanet</a>
+        <a href="#">Trabaja con nosotros</a>
+        <a href="#">Sala de prensa</a>
+        <a href="#">Términos y condiciones</a>
+        <a href="#">Política de privacidad</a>
+      </div>
+      <div class="footer-col">
+        <h4>Servicios</h4>
+        <a href="#">Cineplanet Corporativo</a>
+        <a href="#">Alquiler de salas</a>
+        <a href="#">Publicidad en cines</a>
+        <a href="#">Tarjetas regalo</a>
+      </div>
+      <div class="footer-col">
+        <h4>Ayuda</h4>
+        <a href="#">Preguntas frecuentes</a>
+        <a href="#">Contacto</a>
+        <a href="#">Libro de reclamaciones</a>
+        <a href="#">Encuentra tu Cineplanet</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Cineplanet — Réplica visual. Todos los derechos reservados.</span>
+      <span>Diseño demo · No afiliado</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
