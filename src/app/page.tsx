@@ -6,6 +6,8 @@ import MoviesGrid from "@/components/site/MoviesGrid";
 import Promotions from "@/components/site/Promotions";
 import SocioStrip from "@/components/site/SocioStrip";
 import Dulceria from "@/components/site/Dulceria";
+import AppDownload from "@/components/site/AppDownload";
+import SiteFooter from "@/components/site/SiteFooter";
 
 export default function Home() {
   return (
@@ -18,6 +20,8 @@ export default function Home() {
       <Promotions />
       <SocioStrip />
       <Dulceria />
+      <AppDownload />
+      <SiteFooter />
     </>
   );
 }
