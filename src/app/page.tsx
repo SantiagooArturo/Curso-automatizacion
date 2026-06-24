@@ -3,6 +3,9 @@ import SiteHeader from "@/components/site/SiteHeader";
 import HeroCarousel from "@/components/site/HeroCarousel";
 import FilterBar from "@/components/site/FilterBar";
 import MoviesGrid from "@/components/site/MoviesGrid";
+import Promotions from "@/components/site/Promotions";
+import SocioStrip from "@/components/site/SocioStrip";
+import Dulceria from "@/components/site/Dulceria";
 
 export default function Home() {
   return (
@@ -12,6 +15,9 @@ export default function Home() {
       <HeroCarousel />
       <FilterBar />
       <MoviesGrid />
+      <Promotions />
+      <SocioStrip />
+      <Dulceria />
     </>
   );
 }
