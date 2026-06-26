@@ -1,101 +1,102 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { TransitionEvent } from "react";
 import { movies } from "@/lib/data";
 import { PosterSVG } from "@/lib/poster";
-import { getPerView, totalPages, nextPage, prevPage } from "@/lib/carousel";
+import { getPerView, totalPages } from "@/lib/carousel";
 
-// The active poster (shows COMPRAR badge) is fixed at index 1, matching the prototype.
+// The real movie that carries the COMPRAR badge, matching the prototype.
 const ACTIVE_IDX = 1;
+// Max cards-per-view across breakpoints. Used as a constant clone count so the
+// server and client render the same DOM (no hydration mismatch) and the right
+// edge of the viewport is always filled, whatever the breakpoint.
+const CLONES = 6;
+const N = movies.length;
+// Real movies followed by CLONES copies of the first ones. When the track
+// scrolls into the clones (pos === N) we snap back to the real start, which is
+// pixel-identical — so the loop is seamless and never shows empty space.
+const displayList = [...movies, ...movies.slice(0, CLONES)];
 
 export default function HeroCarousel() {
-  const [page, setPage] = useState(0);
-  // Start with 6 as SSR default; effects will correct on client.
-  const [perView, setPerView] = useState(6);
-  const [offset, setOffset] = useState(0);
+  const [perView, setPerView] = useState(CLONES);
+  const [step, setStep] = useState(0); // px per card = card width + gap
+  const [pos, setPos] = useState(0); // index of left-most visible card (0..N)
+  const [animate, setAnimate] = useState(true);
 
   const trackRef = useRef<HTMLDivElement>(null);
-  // Keep a ref to perView so the auto-advance interval never goes stale.
-  const perViewRef = useRef(perView);
-  const pageRef = useRef(page);
 
-  useEffect(() => {
-    perViewRef.current = perView;
-  }, [perView]);
-
-  useEffect(() => {
-    pageRef.current = page;
-  }, [page]);
-
-  // Compute the pixel offset from current page, perView, and card geometry.
-  function computeOffset(currentPage: number, currentPerView: number): number {
+  const measureStep = useCallback(() => {
     const track = trackRef.current;
     if (!track) return 0;
-    const firstCard = track.querySelector<HTMLElement>(".poster-card");
-    if (!firstCard) return 0;
-    const cardWidth = firstCard.getBoundingClientRect().width;
+    const card = track.querySelector<HTMLElement>(".poster-card");
+    if (!card) return 0;
+    const width = card.getBoundingClientRect().width;
     const gap = parseFloat(getComputedStyle(track).gap) || 24;
-    return currentPage * currentPerView * (cardWidth + gap);
-  }
-
-  // On mount: set perView from real window width, then compute offset.
-  useEffect(() => {
-    const pv = getPerView(window.innerWidth);
-    setPerView(pv);
-    perViewRef.current = pv;
-    // Use requestAnimationFrame so the DOM has rendered before we measure.
-    const raf = requestAnimationFrame(() => {
-      setOffset(computeOffset(0, pv));
-    });
-    return () => cancelAnimationFrame(raf);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return width + gap;
   }, []);
 
-  // Recompute offset whenever page or perView changes.
+  // Mount + resize: sync cards-per-view and the measured step.
   useEffect(() => {
-    const raf = requestAnimationFrame(() => {
-      setOffset(computeOffset(page, perView));
-    });
-    return () => cancelAnimationFrame(raf);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, perView]);
-
-  // Resize handler: update perView, clamp page, recompute offset.
-  useEffect(() => {
-    function handleResize() {
-      const pv = getPerView(window.innerWidth);
-      const pages = totalPages(movies.length, pv);
-      setPerView(pv);
-      perViewRef.current = pv;
-      setPage((p) => {
-        const clamped = Math.min(p, pages - 1);
-        pageRef.current = clamped;
-        return clamped;
-      });
+    function sync() {
+      setPerView(getPerView(window.innerWidth));
+      // Measure after layout settles so the responsive card width is current.
+      requestAnimationFrame(() => setStep(measureStep()));
     }
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    sync();
+    window.addEventListener("resize", sync);
+    return () => window.removeEventListener("resize", sync);
+  }, [measureStep]);
 
-  // Auto-advance every 7 seconds. Uses refs to avoid stale closures.
+  // After any no-transition snap, re-enable the transition on the next frame.
   useEffect(() => {
-    const timer = setInterval(() => {
-      const pv = perViewRef.current;
-      const pages = totalPages(movies.length, pv);
-      setPage((p) => nextPage(p, pages));
-    }, 7000);
-    return () => clearInterval(timer);
+    if (animate) return;
+    const raf = requestAnimationFrame(() => setAnimate(true));
+    return () => cancelAnimationFrame(raf);
+  }, [animate]);
+
+  const goNext = useCallback(() => {
+    setAnimate(true);
+    setPos((p) => Math.min(p + 1, N));
   }, []);
 
-  const pages = totalPages(movies.length, perView);
+  const goPrev = useCallback(() => {
+    setPos((p) => {
+      if (p > 0) {
+        setAnimate(true);
+        return p - 1;
+      }
+      // Wrap backwards: jump (no transition) to the cloned start — visually
+      // identical to pos 0 — then animate one card left to the real last movie.
+      setAnimate(false);
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          setAnimate(true);
+          setPos(N - 1);
+        }),
+      );
+      return N;
+    });
+  }, []);
 
-  function handlePrev() {
-    setPage((p) => prevPage(p, pages));
+  // Auto-advance one card every 3 seconds.
+  useEffect(() => {
+    const timer = setInterval(goNext, 3000);
+    return () => clearInterval(timer);
+  }, [goNext]);
+
+  // When the track reaches the cloned start (pos === N), snap back to the real
+  // start without a transition — the seam is invisible.
+  function handleTransitionEnd(e: TransitionEvent<HTMLDivElement>) {
+    if (e.target !== e.currentTarget) return;
+    if (pos >= N) {
+      setAnimate(false);
+      setPos((p) => p - N);
+    }
   }
 
-  function handleNext() {
-    setPage((p) => nextPage(p, pages));
-  }
+  const pages = totalPages(N, perView);
+  const activeDot = Math.floor((pos % N) / perView) % pages;
 
   return (
     <section className="hero">
@@ -108,7 +109,7 @@ export default function HeroCarousel() {
         <button
           className="carousel-arrow prev"
           aria-label="Anterior"
-          onClick={handlePrev}
+          onClick={goPrev}
         >
           <svg
             viewBox="0 0 24 24"
@@ -128,12 +129,16 @@ export default function HeroCarousel() {
           <div
             className="track"
             ref={trackRef}
-            style={{ transform: `translateX(-${offset}px)` }}
+            onTransitionEnd={handleTransitionEnd}
+            style={{
+              transform: `translateX(-${pos * step}px)`,
+              transition: animate ? undefined : "none",
+            }}
           >
-            {movies.map((m, i) => (
+            {displayList.map((m, i) => (
               <div
                 className={"poster-card" + (i === ACTIVE_IDX ? " active" : "")}
-                key={m.title}
+                key={i}
               >
                 <div className="frame">
                   <div className="poster-img">
@@ -159,7 +164,7 @@ export default function HeroCarousel() {
         <button
           className="carousel-arrow next"
           aria-label="Siguiente"
-          onClick={handleNext}
+          onClick={goNext}
         >
           <svg
             viewBox="0 0 24 24"
@@ -180,8 +185,11 @@ export default function HeroCarousel() {
         {Array.from({ length: pages }).map((_, i) => (
           <span
             key={i}
-            className={"dot" + (i === page ? " active" : "")}
-            onClick={() => setPage(i)}
+            className={"dot" + (i === activeDot ? " active" : "")}
+            onClick={() => {
+              setAnimate(true);
+              setPos(i * perView);
+            }}
           />
         ))}
       </div>
