@@ -2,17 +2,29 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Logo from "./Logo";
+
+const NAV_ITEMS: { label: string; href: string }[] = [
+  { label: "Películas", href: "/" },
+  { label: "Cines", href: "#" },
+  { label: "Promociones", href: "#" },
+  { label: "Socio", href: "#" },
+  { label: "Dulcería", href: "/dulceria" },
+  { label: "Corporativo", href: "#" },
+  { label: "Blog", href: "#" },
+];
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <header className="site-header">
       <div className="header-inner">
-        <a href="#" className="logo" aria-label="Cine de Santiago">
+        <Link href="/" className="logo" aria-label="Cine de Santiago">
           <Logo />
-        </a>
+        </Link>
 
         <button
           className="hamburger"
@@ -25,13 +37,25 @@ export default function SiteHeader() {
         </button>
 
         <nav className={"primary-nav" + (open ? " open" : "")}>
-          <a href="#" className="nav-link active">Películas</a>
-          <a href="#" className="nav-link">Cines</a>
-          <a href="#" className="nav-link">Promociones</a>
-          <a href="#" className="nav-link">Socio</a>
-          <a href="#" className="nav-link">Dulcería</a>
-          <a href="#" className="nav-link">Corporativo</a>
-          <a href="#" className="nav-link">Blog</a>
+          {NAV_ITEMS.map((item) => {
+            const isReal = item.href !== "#";
+            const active = isReal && pathname === item.href;
+            const className = "nav-link" + (active ? " active" : "");
+            return isReal ? (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={className}
+                onClick={() => setOpen(false)}
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <a key={item.label} href="#" className={className}>
+                {item.label}
+              </a>
+            );
+          })}
         </nav>
 
         <div className="header-actions">

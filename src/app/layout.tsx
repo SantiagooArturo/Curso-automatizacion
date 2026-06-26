@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={cn(mulish.variable, bowlby.variable, "font-sans", geist.variable)}>
+    <html lang="es" className={cn("scroll-smooth", mulish.variable, bowlby.variable, "font-sans", geist.variable)}>
       <body style={{ fontFamily: "var(--font-mulish), system-ui, sans-serif" }}>
         {children}
       </body>
