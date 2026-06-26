@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "./Logo";
+import { useAuth } from "@/components/auth/AuthProvider";
 
 const NAV_ITEMS: { label: string; href: string }[] = [
   { label: "Películas", href: "/" },
@@ -18,6 +19,10 @@ const NAV_ITEMS: { label: string; href: string }[] = [
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const { user } = useAuth();
+
+  const initial = (user?.displayName || user?.email || "U").charAt(0).toUpperCase();
+  const firstName = user?.displayName?.split(" ")[0] ?? null;
 
   return (
     <header className="site-header">
@@ -59,13 +64,30 @@ export default function SiteHeader() {
         </nav>
 
         <div className="header-actions">
-          <Link href="/login" className="action-btn" aria-label="Cuenta">
-            <span className="action-badge">Únete</span>
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="8" r="4" />
-              <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" />
-            </svg>
-          </Link>
+          {user ? (
+            <Link
+              href="/cuenta"
+              className="action-btn flex items-center gap-2"
+              aria-label="Mi cuenta"
+            >
+              <span className="grid size-8 place-items-center rounded-full bg-magenta text-sm font-extrabold text-white">
+                {initial}
+              </span>
+              {firstName && (
+                <span className="hidden text-sm font-bold text-white lg:inline">
+                  {firstName}
+                </span>
+              )}
+            </Link>
+          ) : (
+            <Link href="/login" className="action-btn" aria-label="Cuenta">
+              <span className="action-badge">Únete</span>
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" />
+              </svg>
+            </Link>
+          )}
           <button className="action-btn" aria-label="Buscar">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2.2">
               <circle cx="11" cy="11" r="7" />

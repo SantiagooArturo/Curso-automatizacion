@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Mulish, Bowlby_One, Geist } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { AuthProvider } from "@/components/auth/AuthProvider";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -30,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="es" className={cn("scroll-smooth", mulish.variable, bowlby.variable, "font-sans", geist.variable)}>
       <body style={{ fontFamily: "var(--font-mulish), system-ui, sans-serif" }}>
-        {children}
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

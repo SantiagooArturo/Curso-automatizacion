@@ -3,3 +3,7 @@ node_modules/
 .env.local
 *.log
 .DS_Store
+
+# Firebase secrets (never commit)
+firebase-service-account.json
+*-service-account.json
