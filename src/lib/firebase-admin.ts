@@ -1,7 +1,7 @@
 // Server-only Firebase Admin SDK. Never import this from client components.
 import { initializeApp, getApps, getApp, cert, type App } from "firebase-admin/app";
-import { getAuth } from "firebase-admin/auth";
-import { getFirestore } from "firebase-admin/firestore";
+import { getAuth, type Auth } from "firebase-admin/auth";
+import { getFirestore, type Firestore } from "firebase-admin/firestore";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 
@@ -20,9 +20,19 @@ function loadServiceAccount() {
   return JSON.parse(readFileSync(path.resolve(process.cwd(), rel), "utf8"));
 }
 
-const app: App = getApps().length
-  ? getApp()
-  : initializeApp({ credential: cert(loadServiceAccount()) });
+// Lazy init: the credential is only loaded on first use (request time), never
+// at import/build time — so `next build` doesn't need the secret to be present.
+let app: App | undefined;
+function getAdminApp(): App {
+  if (getApps().length) return getApp();
+  if (!app) app = initializeApp({ credential: cert(loadServiceAccount()) });
+  return app;
+}
 
-export const adminAuth = getAuth(app);
-export const adminDb = getFirestore(app);
+export function getAdminAuth(): Auth {
+  return getAuth(getAdminApp());
+}
+
+export function getAdminDb(): Firestore {
+  return getFirestore(getAdminApp());
+}

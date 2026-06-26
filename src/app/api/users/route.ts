@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { FieldValue } from "firebase-admin/firestore";
-import { adminAuth, adminDb } from "@/lib/firebase-admin";
+import { getAdminAuth, getAdminDb } from "@/lib/firebase-admin";
 
 export const runtime = "nodejs";
 
@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
 
   let decoded;
   try {
-    decoded = await adminAuth.verifyIdToken(token);
+    decoded = await getAdminAuth().verifyIdToken(token);
   } catch {
     return NextResponse.json({ error: "Token inválido." }, { status: 401 });
   }
@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => ({}));
   const name = typeof body?.name === "string" ? body.name.trim() : null;
 
-  const ref = adminDb.collection("users").doc(decoded.uid);
+  const ref = getAdminDb().collection("users").doc(decoded.uid);
   const snap = await ref.get();
 
   await ref.set(
