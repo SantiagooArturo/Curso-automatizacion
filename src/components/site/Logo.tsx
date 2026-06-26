@@ -6,7 +6,7 @@ interface LogoProps {
 export default function Logo({ width = 220, className }: LogoProps) {
   return (
     <svg
-      viewBox="0 0 220 50"
+      viewBox="0 0 250 50"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
       width={width}
@@ -23,15 +23,17 @@ export default function Logo({ width = 220, className }: LogoProps) {
         <path d="M5 41 L45 9" stroke="#28d4ff" strokeWidth="3.5" strokeLinecap="round" />
       </g>
       <text
-        x="58"
-        y="34"
+        x="52"
+        y="33"
         fill="#ffffff"
         fontFamily="Mulish, sans-serif"
         fontWeight="800"
-        fontSize="28"
-        letterSpacing="-0.6"
+        fontSize="22"
+        letterSpacing="-0.3"
+        textLength="192"
+        lengthAdjust="spacingAndGlyphs"
       >
-        cineplanet
+        Cine de Santiago
       </text>
     </svg>
   );

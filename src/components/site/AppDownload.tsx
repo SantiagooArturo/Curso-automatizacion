@@ -3,7 +3,7 @@ export default function AppDownload() {
     <section className="app-section">
       <div className="app-inner">
         <div className="app-copy">
-          <h2>Descarga la app de Cineplanet</h2>
+          <h2>Descarga la app de Cine de Santiago</h2>
           <p>Compra tus entradas, acumula puntos y vive el cine donde estés.</p>
           <div className="store-row">
             <button className="store-btn">

@@ -36,7 +36,7 @@ export default function SiteFooter() {
         </div>
         <div className="footer-col">
           <h4>Información</h4>
-          <a href="#">Sobre Cineplanet</a>
+          <a href="#">Sobre Cine de Santiago</a>
           <a href="#">Trabaja con nosotros</a>
           <a href="#">Sala de prensa</a>
           <a href="#">Términos y condiciones</a>
@@ -44,7 +44,7 @@ export default function SiteFooter() {
         </div>
         <div className="footer-col">
           <h4>Servicios</h4>
-          <a href="#">Cineplanet Corporativo</a>
+          <a href="#">Cine de Santiago Corporativo</a>
           <a href="#">Alquiler de salas</a>
           <a href="#">Publicidad en cines</a>
           <a href="#">Tarjetas regalo</a>
@@ -54,11 +54,11 @@ export default function SiteFooter() {
           <a href="#">Preguntas frecuentes</a>
           <a href="#">Contacto</a>
           <a href="#">Libro de reclamaciones</a>
-          <a href="#">Encuentra tu Cineplanet</a>
+          <a href="#">Encuentra tu Cine de Santiago</a>
         </div>
       </div>
       <div className="footer-bottom">
-        <span>© 2026 Cineplanet — Réplica visual. Todos los derechos reservados.</span>
+        <span>© 2026 Cine de Santiago — Réplica visual. Todos los derechos reservados.</span>
         <span>Diseño demo · No afiliado</span>
       </div>
     </footer>

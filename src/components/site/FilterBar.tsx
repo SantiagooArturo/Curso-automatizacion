@@ -61,7 +61,7 @@ export default function FilterBar() {
         <div className="filter-cell">
           <button className="filter-pick" onClick={activate}>
             <span className="filter-strong">Por cine</span>
-            <span className="filter-sub">Elige tu Cineplanet</span>
+            <span className="filter-sub">Elige tu Cine de Santiago</span>
             <ChevronDown />
           </button>
         </div>

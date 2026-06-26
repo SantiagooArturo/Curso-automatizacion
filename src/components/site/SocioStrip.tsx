@@ -3,7 +3,7 @@ export default function SocioStrip() {
     <section className="socio-strip">
       <div className="socio-card">
         <div className="socio-text">
-          <span className="socio-eyebrow">Socio Cineplanet</span>
+          <span className="socio-eyebrow">Socio Cine de Santiago</span>
           <h3>Acumula puntos en cada compra y disfruta de beneficios exclusivos</h3>
           <button className="cta-pill">QUIERO SER SOCIO</button>
         </div>
@@ -11,7 +11,7 @@ export default function SocioStrip() {
           <div className="loyalty-card">
             <div className="lc-top">
               <span>SOCIO</span>
-              <strong>cineplanet</strong>
+              <strong>Cine de Santiago</strong>
             </div>
             <div className="lc-num">5412 •••• •••• 7829</div>
             <div className="lc-bottom">

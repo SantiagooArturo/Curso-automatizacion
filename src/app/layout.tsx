@@ -18,7 +18,7 @@ const bowlby = Bowlby_One({
 });
 
 export const metadata: Metadata = {
-  title: "Cineplanet — Réplica visual",
+  title: "Cine de Santiago — Réplica visual",
   description: "Estrenos, promociones y la mejor dulcería en un solo lugar.",
 };
 

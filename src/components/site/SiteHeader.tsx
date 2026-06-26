@@ -9,7 +9,7 @@ export default function SiteHeader() {
   return (
     <header className="site-header">
       <div className="header-inner">
-        <a href="#" className="logo" aria-label="Cineplanet">
+        <a href="#" className="logo" aria-label="Cine de Santiago">
           <Logo />
         </a>
 
