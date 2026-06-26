@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import Logo from "./Logo";
 
 export default function SiteHeader() {
@@ -34,13 +35,13 @@ export default function SiteHeader() {
         </nav>
 
         <div className="header-actions">
-          <button className="action-btn" aria-label="Cuenta">
+          <Link href="/login" className="action-btn" aria-label="Cuenta">
             <span className="action-badge">Únete</span>
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2">
               <circle cx="12" cy="8" r="4" />
               <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" />
             </svg>
-          </button>
+          </Link>
           <button className="action-btn" aria-label="Buscar">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2.2">
               <circle cx="11" cy="11" r="7" />
